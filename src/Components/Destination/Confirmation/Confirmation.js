@@ -7,10 +7,10 @@ const Confirmation = () => {
         <div>
             <div className="confirmation">
                 <h1 style={{ color: "white" }}>You are using: {vehicle.Transport_Name}</h1>
+                <img src={vehicle.Transport_Image} alt=""/>
                 <h1 style={{ color: "white" }}>For 2 person price: {vehicle.Transport_seat_small}</h1>
                 <h1 style={{ color: "white" }}>For 4 person price: {vehicle.Transport_seat_medium}</h1>
                 <h1 style={{ color: "white" }}>For 6 person price: {vehicle.Transport_seat_large}</h1>
-                <h1 style={{ color: "white" }}>This is Confirmation</h1>
                 <button>Proceed</button>
             </div>
             <div className="map">
