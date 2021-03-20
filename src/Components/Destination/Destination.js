@@ -6,17 +6,21 @@ import { Checkbox, Input } from "@material-ui/core";
 import { Input as AntdInput } from "antd";
 
 import "./Destination.css";
+import { Link, Route, Router, useHistory, useLocation } from "react-router-dom";
+import Confirmation from "./Confirmation/Confirmation";
 
 const Destination = () => {
   const { control, handleSubmit } = useForm();
+  const historyOfDestination = useHistory();
 
   const onSubmit = data => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
+    historyOfDestination.push("/Confirmation");
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      
+
       <label>From</label>
       <Controller
         as={AntdInput}
@@ -38,8 +42,8 @@ const Destination = () => {
         control={control}
         defaultValue=""
       />
-       
-      
+
+
       <Controller
         name="Checkbox"
         control={control}
@@ -52,6 +56,7 @@ const Destination = () => {
       />
 
       <input type="submit" />
+
     </form>
   );
 };

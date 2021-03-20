@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import './Home.css';
 import bike from '../../Images/new-bike-2012-flat2.jpg';
+import fakeData from '../../FakeData/fakeData.json';
+import EachVehicle from '../EachVehicle/EachVehicle';
 
 const Home = () => {
 
+    const [vehicle, setVehicle] = useState([]);
+    const vehicleInfo = fakeData;
     return (
         <div className="Home">
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={bike} />
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                    </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-            </Card>
-            
+            {
+                vehicleInfo.map(x=><EachVehicle info={x} key={x.id}></EachVehicle>)
+            }
         </div>
     );
 };

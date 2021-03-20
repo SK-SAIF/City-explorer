@@ -1,8 +1,12 @@
 
-.navbar{
-  border: 5px solid red;
+/* .navbar{
+  
   width: 48%;
   display: flex;
   float: left;
   height: 100px;
+  
+} */
+.nameBar{
+  margin-bottom: 50px;
 }

@@ -3,15 +3,16 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 
 const SignUp = () => {
 
-    const [newUser, setNewUser] = useContext(UserContext);
+    const [userUpdate, setUserUpdate] = useContext(UserContext);
+    const history2=useHistory();
+    const locations=useLocation();
+    let { from } = locations.state || { from: { pathname: "/" } };
 
-    const history = useHistory();
-    const location = useLocation();
-    let { from } = location.state || { from: { pathname: "/" } };
 
     const [user, setUser] = useState({
         isSignedIn: 'false',
@@ -45,7 +46,7 @@ const SignUp = () => {
     }
 
     const handleSignUp = (e) => {
-        if (newUser && user.email && user.password) {
+        if (user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
                 .then(res => {
                     let newUserInfo = { ...user };
@@ -53,35 +54,17 @@ const SignUp = () => {
                     newUserInfo.success = true;
                     setUser(newUserInfo);
                     updateUserName(user.name);
+                    setUserUpdate(newUserInfo);
+                    history2.replace(from);
                 })
                 .catch((error) => {
                     let newUserInfo = { ...user };
                     newUserInfo.success = false;
                     newUserInfo.error = error.message;
                     setUser(newUserInfo);
+                    setUserUpdate(newUserInfo);
                 });
         }
-
-        if (!newUser && user.email && user.password) {
-
-            firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-                .then(res => {
-                    let newUserInfo = { ...user };
-                    newUserInfo.error = '';
-                    newUserInfo.success = true;
-                    setUser(newUserInfo);
-                    console.log(res.user);
-                    history.replace(from);
-                    
-                })
-                .catch((error) => {
-                    let newUserInfo = { ...user };
-                    newUserInfo.success = false;
-                    newUserInfo.error = error.message;
-                    setUser(newUserInfo);
-                });
-        }
-
         e.preventDefault();
     }
 
@@ -92,7 +75,8 @@ const SignUp = () => {
             displayName: updateName
 
         }).then(function () {
-            console.log("User updated successfully")
+            console.log("User updated successfully",user);
+            
         }).catch(function (error) {
             console.log(error);
         });
@@ -105,11 +89,12 @@ const SignUp = () => {
                 <br />
                 <input type="text" name="email" id="" placeholder="Your Email" onBlur={handleChange} required />
                 <br />
-                <input type="text" name="password" id="" placeholder="Your Password" onBlur={handleChange} required />
+                <input type="password" name="password" id="" placeholder="Your Password" onBlur={handleChange} required />
                 <br />
-                <input type="text" name="confirmedPassword" id="" placeholder="Confirm Password" onBlur={handleChange} required />
+                <input type="password" name="confirmedPassword" id="" placeholder="Confirm Password" onBlur={handleChange}/>
                 <br />
                 <input type="submit" value="Sign Up" />
+                <Link to="/Login" onClickCapture={() => setUserUpdate(userUpdate)}>Already have an account</Link>
             </form>
 
         </div>

@@ -1,0 +1,18 @@
+.vehicle-img img{
+    width: 200px;
+    height: 200px;
+}
+.vehicle-name h1{
+    color: darkorange;
+    font-weight: bold;
+    font-size: 60px;
+}
+.each-vehicle{
+    width: 300px;
+    height: 500px;
+    border-radius: 20px;
+    float: left;
+    margin: 30px;
+    padding: 20px;
+    background-color: darkseagreen;
+}

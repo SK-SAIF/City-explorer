@@ -1,4 +1,4 @@
-import coverPicture from '../src/Images/City-street-bokeh-winter-road-lights_1920x1200.jpg';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,29 +13,32 @@ import Login from './Components/Login/Login';
 import NotFound from './Components/NotFound/NotFound';
 import SignUp from './Components/SignUp/SignUp';
 import { createContext, useState } from 'react';
-
+import "./App.css";
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import Confirmation from './Components/Destination/Confirmation/Confirmation';
 
 export const UserContext = createContext();
 
 
 function App() {
-  const [newUser, setNewUser] =useState(false);
-
+  const [userUpdate, setUserUpdate] =useState(false);
+  const navStyle={margin: "20px", padding: "20px",color:"cyan",fontSize:"20px",textDecoration:"none"}
   return (
-    <UserContext.Provider value={[newUser, setNewUser]}>
+    <UserContext.Provider value={[userUpdate, setUserUpdate]}>
       <div className="app">
+        <h2 style={{color:"white"}}>Email of user:{userUpdate.email}</h2>
         <Router>
           <nav>
-            <div className="navbar">
-              <a to=""><span style={{ color: "yellow",textAlign:"center", fontSize: "70px", fontWeight: "bold" }}>City Explorer</span></a>
+            <div className="nameBar">
+              <a to=""><span style={{ color: "yellow", fontSize: "70px", fontWeight: "bold" }}>City Explorer</span></a>
             </div>
 
             <div className="navbar">
-              <Link to="/Home" style={{ margin: "20px", padding: "20px",color:"cyan",fontSize:"20px" }}>Home</Link>
-              <Link to="/Destination" style={{  margin: "20px", padding: "20px",color:"cyan",fontSize:"20px"  }}>Destination</Link>
-              <Link to="/Blog" style={{ margin: "20px", padding: "20px",color:"cyan",fontSize:"20px" }}>Blog</Link>
-              <Link to="/Contact" style={{ margin: "20px", padding: "20px",color:"cyan",fontSize:"20px" }}>Contact</Link>
-              <Link to="/Login" style={{ margin: "20px", padding: "20px",fontSize:"20px" }}><button>Login</button></Link>
+              <Link to="/Home" style={navStyle}>Home</Link>
+              <Link to="/Destination" style={navStyle}>Destination</Link>
+              <Link to="/Blog" style={navStyle}>Blog</Link>
+              <Link to="/Contact" style={navStyle}>Contact</Link>
+              <Link to="/Login" style={{ margin: "20px", padding: "20px",textDecoration:"none" }}><button>Login Or SignUp</button></Link>
             </div>
           </nav>
 
@@ -46,9 +49,9 @@ function App() {
             <Route path="/Home">
               <Home></Home>
             </Route>
-            <Route path="/Destination">
+            <PrivateRoute path="/Destination">
               <Destination></Destination>
-            </Route>
+            </PrivateRoute>
             <Route path="/Contact">
               <Contact></Contact>
             </Route>
@@ -61,9 +64,9 @@ function App() {
             <Route path="/SignUp">
               <SignUp></SignUp>
             </Route>
-            <Route path="/SignUp2">
-              <SignUp></SignUp>
-            </Route>
+            <PrivateRoute path="/Confirmation">
+              <Confirmation></Confirmation>
+            </PrivateRoute>
             <Route path="*">
               <NotFound></NotFound>
             </Route>
