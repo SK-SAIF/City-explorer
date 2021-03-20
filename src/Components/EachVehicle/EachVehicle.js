@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
+import { VehicleContext } from '../../App';
 import './EachVehicle.css';
 
 const EachVehicle = (props) => {
     const vehicleInfo = props.info;
-    const historyOfVehicle=useHistory();
-
-    const handleEachVehicle=()=>{
+    const historyOfVehicle = useHistory();
+    const [vehicle, setVehicle] = useContext(VehicleContext);
+    const handleEachVehicle = () => {
+        setVehicle(vehicleInfo);
         historyOfVehicle.push("/Destination");
+        console.log("You clicked", vehicleInfo);
     }
     return (
         <div>
@@ -19,11 +22,7 @@ const EachVehicle = (props) => {
                     <img src={vehicleInfo.Transport_Image} alt="" />
                 </div>
             </button>
-
-
-
         </div>
     );
 };
-
 export default EachVehicle;

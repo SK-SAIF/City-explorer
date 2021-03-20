@@ -1,0 +1,12 @@
+.confirmation{
+    border: 1px solid gray;
+    border-radius: 20px;
+    width: 500px;
+    height: 500px;
+    float: left;
+}
+.map{
+    width: 500px;
+    height: 700px;
+    float: left;
+}

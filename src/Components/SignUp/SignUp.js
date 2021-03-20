@@ -5,15 +5,11 @@ import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
-
 const SignUp = () => {
-
     const [userUpdate, setUserUpdate] = useContext(UserContext);
-    const history2=useHistory();
-    const locations=useLocation();
+    const history2 = useHistory();
+    const locations = useLocation();
     let { from } = locations.state || { from: { pathname: "/" } };
-
-
     const [user, setUser] = useState({
         isSignedIn: 'false',
         name: '',
@@ -23,8 +19,6 @@ const SignUp = () => {
         error: '',
         success: false
     });
-
-
     const handleChange = (event) => {
 
         let isFormValid;
@@ -42,9 +36,7 @@ const SignUp = () => {
             newUserInfo[event.target.name] = event.target.value;
             setUser(newUserInfo);
         }
-
     }
-
     const handleSignUp = (e) => {
         if (user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
@@ -54,7 +46,6 @@ const SignUp = () => {
                     newUserInfo.success = true;
                     setUser(newUserInfo);
                     updateUserName(user.name);
-                    setUserUpdate(newUserInfo);
                     history2.replace(from);
                 })
                 .catch((error) => {
@@ -67,7 +58,6 @@ const SignUp = () => {
         }
         e.preventDefault();
     }
-
     const updateUserName = updateName => {
         const user = firebase.auth().currentUser;
 
@@ -75,13 +65,12 @@ const SignUp = () => {
             displayName: updateName
 
         }).then(function () {
-            console.log("User updated successfully",user);
-            
+            console.log("User updated successfully", user);
+            setUserUpdate(user);
         }).catch(function (error) {
             console.log(error);
         });
     }
-
     return (
         <div>
             <form onSubmit={handleSignUp}>
@@ -91,14 +80,12 @@ const SignUp = () => {
                 <br />
                 <input type="password" name="password" id="" placeholder="Your Password" onBlur={handleChange} required />
                 <br />
-                <input type="password" name="confirmedPassword" id="" placeholder="Confirm Password" onBlur={handleChange}/>
+                <input type="password" name="confirmedPassword" id="" placeholder="Confirm Password" onBlur={handleChange} />
                 <br />
                 <input type="submit" value="Sign Up" />
                 <Link to="/Login" onClickCapture={() => setUserUpdate(userUpdate)}>Already have an account</Link>
             </form>
-
         </div>
     );
 };
-
 export default SignUp;
